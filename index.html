@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Countdown Timer</title>
+<style>
+body{
+ font-family: Arial;
+ background: #f2f2f2;
+ text-align: center;
+ padding: 30px;
+}
+h1{ margin-bottom: 20px; }
+
+.timer{
+ display: flex;
+ gap: 15px;
+ justify-content: center;
+ flex-wrap: wrap;
+}
+.box{
+ background: white;
+ border: 1px solid #ccc;
+ width: 90px;
+ padding: 15px;
+ border-radius: 10px;
+}
+.box span{
+ display: block;
+ font-size: 28px;
+ font-weight: bold;
+}
+#message{
+ margin-top: 20px;
+ font-size: 22px;
+ color: green;
+ font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<h1>Countdown Timer</h1>
+<p>Target Date: <span id="targetDate"></span></p>
+
+<div class="timer">
+ <div class="box"><span id="days">0</span>Days</div>
+ <div class="box"><span id="hours">0</span>Hours</div>
+ <div class="box"><span id="minutes">0</span>Mins</div>
+ <div class="box"><span id="seconds">0</span>Secs</div>
+</div>
+
+<div id="message"></div>
+
+<script>
+// Target date configurable - ikkada marchukovachu
+const target = new Date("2026-10-31T23:59:59");
+document.getElementById("targetDate").innerText = target;
+
+function updateCountdown(){
+ const now = new Date();
+ const diff = target - now; // difference in milliseconds
+
+ if(diff <= 0){
+   clearInterval(timer);
+   document.getElementById("message").innerText = "Countdown Finished!";
+   document.getElementById("days").innerText = 0;
+   document.getElementById("hours").innerText = 0;
+   document.getElementById("minutes").innerText = 0;
+   document.getElementById("seconds").innerText = 0;
+   return;
+ }
+
+ // ms to days, hours, mins, secs
+ const days = Math.floor(diff / (1000*60*60*24));
+ const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+ const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+ const seconds = Math.floor((diff % (1000*60)) / 1000);
+
+ document.getElementById("days").innerText = days;
+ document.getElementById("hours").innerText = hours;
+ document.getElementById("minutes").innerText = minutes;
+ document.getElementById("seconds").innerText = seconds;
+}
+
+// update every second
+const timer = setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+
+</body>
+</html>
